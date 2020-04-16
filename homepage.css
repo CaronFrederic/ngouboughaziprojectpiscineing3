@@ -1,0 +1,62 @@
+body {
+padding: 0px; margin: 0px; background: #FFFFFF;
+}
+/*--- navigation bar ---*/
+.navbar { background:#C0C0C0;
+}
+.nav-link, .navbar-brand {
+color: #000000;
+cursor: pointer; }
+.nav-link {
+margin-right: 1em !important;
+} .nav-link:hover {
+color: #0B5DEC; }
+.navbar-collapse { justify-content: flex-end;
+}
+
+
+
+
+.page-footer { background-color: #222; color: #ccc;
+padding: 60px 0 30px;
+}
+.footer-copyright { color: #666; padding: 40px 0;
+}
+
+@media (max-width: 575.98px) {
+.description {
+left: 0;
+padding: 0 15px; position: absolute; top: 10%; transform: none; text-align: center;
+}
+.description h1 {
+font-size: 2em; }
+.description p { font-size: 1.2rem;
+}
+.features { margin: 0;
+} }
+
+
+.middle {
+     position: relative;
+     height: 300px; /*what ever height */
+}
+
+.middle img {
+     max-width: 100%;
+     max-height: 100%; /*what ever height */
+     margin: auto;
+     position: absolute;
+     left: 0;
+     right: 0;
+     top: 0;
+     bottom: 0;
+}
+
+.carousel .item img {
+   left: -0px;  /*important */
+   right: 0px;  /*important */
+   margin: 0 auto;  /*important */
+   max-width: none;  /*important */
+   min-width: 100%;
+   position: absolute;
+}
