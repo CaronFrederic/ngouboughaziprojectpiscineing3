@@ -47,7 +47,7 @@ ECE Ebay
 					
 					<li id="inscrip" class="nav-item"><a class="nav-link" href="#">Insrivez Vous!</a></li>
 					
-					<li class="nav-item"><a class="nav-link" href="#">Connectez Vous!</a></li>
+					<li class="nav-item"><a class="nav-link" href="connection.php?prev=fotBo.php">Connectez Vous!</a></li>
  
 					<li class="nav-item"><a class="nav-link" href="#">Admin</a></li>
  
@@ -135,7 +135,7 @@ while ($donnees = $reponse->fetch())
 ?>
 						<div class="row">
 			
-							<div class="col-sm-3"><?php echo "<img src=\"image/".$donnees['Media']."\"width=\"300\" height=\"300\">"; ?></div>
+							<div class="col-sm-3"><?php echo "<a href=\"items.php?id=".$donnees['ID']."&nom=".$donnees['Nom']."&prev=fotBo.php\"><img src=\"image/".$donnees['Media']."\"width=\"300\" height=\"300\"></a>"; ?></div>
 							<div class="col-sm-3" style="background-color:#E3E3E3;"><h2> <?php echo $donnees['Nom']; ?></h2></div>
 							<div class="col-sm-3"><p> <?php echo $donnees['Description']; ?></p></div>
 							<div class="col-sm-3" style="background-color:#E3E3E3;">

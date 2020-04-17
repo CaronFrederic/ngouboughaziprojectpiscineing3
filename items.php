@@ -20,13 +20,37 @@ ECE Ebay
 	
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 	
-<link rel="stylesheet" type="text/css" href="avip.css">
+<link rel="stylesheet" type="text/css" href="items.css">
 	
 </head> 
 	
 	<body>
 		
+		<?php
 		
+		$id =isset($_GET["id"]) ? $_GET["id"]:"";//if then else
+    
+        $nom =isset($_GET["nom"]) ? $_GET["nom"]:"";
+		
+		$prev=isset($_GET["prev"]) ? $_GET["prev"]:"";
+		
+			try
+			{
+				
+				//On établit la connexion
+            $conn = new PDO('mysql:host=localhost;dbname=EbayECE;charset=utf8', 'root', 'root');
+            
+            //On vérifie la connexion
+			}
+            catch(Exception $e){
+                die('Erreur : ' .$e->getMessage);
+            }
+
+		$reponse = $conn->query('SELECT * FROM Items WHERE ID=\''.$id.'\' AND Nom=\''.$nom.'\'');
+		$donnees=$reponse->fetch();
+
+?>
+
 		<nav class="navbar navbar-expand-md">
  				<a class="navbar-brand" href="#"></a>
 					
@@ -45,9 +69,11 @@ ECE Ebay
 					
 					<li id="inscrip" class="nav-item"><a class="nav-link" href="homepage.php">Accueil</a></li>
 					
+					<li id="inscrip" class="nav-item"><a class="nav-link" <?php echo 'href="'.$prev.'"' ?>>Page Pr&eacute;dente</a></li>
+					
 					<li id="inscrip" class="nav-item"><a class="nav-link" href="#">Insrivez Vous!</a></li>
 					
-					<li class="nav-item"><a class="nav-link" href="connection.php?prev=avip.php">Connectez Vous!</a></li>
+					<li class="nav-item"><a class="nav-link" <?php echo 'href="connection.php?prev='.$prev.'"'?>>Connectez Vous!</a></li>
  
 					<li class="nav-item"><a class="nav-link" href="#">Admin</a></li>
  
@@ -68,7 +94,7 @@ ECE Ebay
 				
 			<div class="row">
 				
-				<div class="col-sm-4">  <h1 class="titre">Acessoire VIP</h1> </div>
+				<div class="col-sm-4">  <h1 class="titre"><?php echo $nom ?></h1> </div>
 				
 			</div>
 			
@@ -80,21 +106,20 @@ ECE Ebay
 		<div class="row">
 				
 				<div class="col-sm-3"></div>
-				<div class="col-sm-1"><h2 class="titre">Filtre:</h2></div>
-			<div class="col-sm-1"></div>
+				<div class="col-sm-2"><h2 class="titre">Cat&eacute;gorie:</h2></div>
 				<div class="col-sm-2">  
-					<button type="button" class="btn btn-light" href="avipEncher.php">
-						<a class="btn btn-default" href="avipEncher.php" role="button" style="color:black">Ench&egrave;re</a>
+					<button type="button" class="btn btn-light" href="fot.php">
+						<a class="btn btn-default" href="fot.php" role="button" style="color:black">Feraille/Tr&eacute;sors</a>
 					</button> 
 			    </div>
 				<div class="col-sm-2">  
-					<button type="button" class="btn btn-light" href="avipAi.php">
-						<a class="btn btn-default" href="avipAi.php" role="button" style="color:black">Achat Im&eacute;diat</a>
+					<button type="button" class="btn btn-light" href="bpm.php">
+						<a class="btn btn-default" href="bpm.php" role="button" style="color:black">Bon pour Mus&eacute;e</a>
 					</button> 
 			    </div>
-				<div class="col-sm-2">
-				<button type="button" class="btn btn-light" href="avipBo.php">
-						<a class="btn btn-default" href="avipBo.php" role="button" style="color:black">Meilleure Offre</a>
+				<div class="col-sm-2">  
+					<button type="button" class="btn btn-light" href="avip.php">
+						<a class="btn btn-default" href="avip.php" role="button" style="color:black">Acessoire VIP</a>
 					</button> 
 			    </div>
 				
@@ -115,33 +140,17 @@ ECE Ebay
 			<div class="col-sm-3" style="background-color:#F5B041;"><h3>D&eacute;scription</h3></div>
 			<div class="col-sm-3" style="background-color:lightgreen;"></div>
 			</div>
-<?php
-			try
-			{
-				
-				//On établit la connexion
-            $conn = new PDO('mysql:host=localhost;dbname=EbayECE;charset=utf8', 'root', 'root');
-            
-            //On vérifie la connexion
-			}
-            catch(Exception $e){
-                die('Erreur : ' .$e->getMessage);
-            }
 
-		$reponse = $conn->query('SELECT * FROM Items WHERE Categorie=\'AVIP\'');
-
-while ($donnees = $reponse->fetch())
-{
-?>
 						<div class="row">
 			
-							<div class="col-sm-3"><?php echo "<a href=\"items.php?id=".$donnees['ID']."&nom=".$donnees['Nom']."&prev=avip.php\"><img src=\"image/".$donnees['Media']."\"width=\"300\" height=\"300\"></a>"; ?></div>
+							<div class="col-sm-3"><?php echo "<img src=\"image/".$donnees['Media']."\"width=\"300\" height=\"300\">"; ?></div>
 							<div class="col-sm-3" style="background-color:#E3E3E3;"><h2> <?php echo $donnees['Nom']; ?></h2></div>
 							<div class="col-sm-3"><p> <?php echo $donnees['Description']; ?></p></div>
 							<div class="col-sm-3" style="background-color:#E3E3E3;">
 							
 							<h1> <?php 
-						
+								
+						echo $prev;
 						if($donnees['Prix']!=0)
 						{
 							echo "Prix: ".$donnees['Prix']."&euro;";
@@ -154,14 +163,64 @@ while ($donnees = $reponse->fetch())
 							</div>
 						</div>
 						
-						<?php
-}
+						
+			
+			
+			
+			<br/><br/><br/>
+			<div class="row">
+			<div class="col-sm-2" ></div>
+			<div class="col-sm-2" >
+				<?php
+				
+					if($donnees['BestOffre']==1)
+					{
+						echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
+					    echo '<a class="btn btn-default" href="connection.php?prev=items.php" role="button" style="color:black">Faire une offre!</a>';	
+					   	echo '</button> ';
+					}
+					
+					?>
+				</div>
+				<div class="col-sm-1" ></div>
+			<div class="col-sm-2" >
+				<?php
+				
+					if($donnees['Enchere']==1)
+					{
+						echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
+					    echo '<a class="btn btn-default" href="connection.php?prev=items.php" role="button" style="color:black">Participer aux Enchère!</a>';	
+					    echo '</button> ';	
+					}
+				     
+				?>
+				</div>
+				<div class="col-sm-1" ></div>
+			<div class="col-sm-2"  >
+				<?php
+				
+					if($donnees['AchatImediat']==1)
+					{
+					 echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
+					 echo '<a class="btn btn-default" href="connection.php?prev=items.php" role="button" style="color:black">Acheter Maintenant!</a>';	
+					 echo '</button> ';	
+					}
+				     
+				?>
+				</div>
+			<div class="col-sm-2"></div>
+			</div>
+			
+			
+			<?php
 
 $reponse->closeCursor(); // Termine le traitement de la requête
 
 ?>
 			</div>
 		
+			
+			
 		
 		
 		<br/><br/>

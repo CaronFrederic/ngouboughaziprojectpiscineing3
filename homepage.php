@@ -45,7 +45,7 @@ ECE Ebay
 					
 					<li id="inscrip" class="nav-item"><a class="nav-link" href="#">Insrivez Vous!</a></li>
 					
-					<li class="nav-item"><a class="nav-link" href="#">Connectez Vous!</a></li>
+					<li class="nav-item"><a class="nav-link" href="connection.php?prev=homepage.php">Connectez Vous!</a></li>
  
 					<li class="nav-item"><a class="nav-link" href="#">Admin</a></li>
  
@@ -126,7 +126,7 @@ ECE Ebay
 			{
 				?>
 			<div class="carousel-item active">
-			<?php echo "<img src=\"image/".$donnees['Media']."\"width=\"300\" height=\"300\">"; ?>
+			<?php echo "<a href=\"items.php?id=".$donnees['ID']."&nom=".$donnees['Nom']."&prev=homepage.php\"><img src=\"image/".$donnees['Media']."\"width=\"300\" height=\"300\"></a>"; ?>
 			<div class="caroussel-caption">
 			<h2> <?php echo $donnees['Nom']; ?></h2>
 			<p> <?php 
@@ -147,7 +147,7 @@ ECE Ebay
 					{
 						?>
 						<div class="carousel-item">
-						<?php echo "<img src=\"image/".$donnees['Media']."\"width=\"300\" height=\"300\">"; ?>
+						<?php echo "<a href=\"items.php?id=".$donnees['ID']."&nom=".$donnees['Nom']."&prev=homepage.php\"><img src=\"image/".$donnees['Media']."\"width=\"300\" height=\"300\"></a>"; ?>
 					    <div class="caroussel-caption">
 					    <h2> <?php echo $donnees['Nom']; ?></h2>
 					    <p> <?php 
