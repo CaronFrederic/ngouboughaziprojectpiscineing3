@@ -26,6 +26,12 @@ ECE Ebay
 	
 	<body>
 		
+		<?php
+		
+		$userid =isset($_GET["userid"]) ? $_GET["userid"]:"";//if then else
+    
+        $mail =isset($_GET["mail"]) ? $_GET["mail"]:"";
+		?>
 		
 		<nav class="navbar navbar-expand-md">
  				<a class="navbar-brand" href="#"></a>
@@ -42,15 +48,28 @@ ECE Ebay
  				
 				
 				<ul class="navbar-nav">
+ 					
+					<?php
+					if($userid=="" && $mail=="")
+					{
+						echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="homepage.php">Accueil</a></li>';
 					
-					<li id="inscrip" class="nav-item"><a class="nav-link" href="homepage.php">Accueil</a></li>
+					    echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="#">Insrivez Vous!</a></li>';
 					
-					<li id="inscrip" class="nav-item"><a class="nav-link" href="#">Insrivez Vous!</a></li>
-					
-					<li class="nav-item"><a class="nav-link" href="connection.php?prev=avipAi.php">Connectez Vous!</a></li>
+					    echo '<li class="nav-item"><a class="nav-link" href="connection.php?prev=avipAi.php">Connectez Vous!</a></li>';
  
-					<li class="nav-item"><a class="nav-link" href="#">Admin</a></li>
+					    echo '<li class="nav-item"><a class="nav-link" href="#">Admin</a></li>';
+					}else 
+					{
+						echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="homepageac.php?userid='.$userid.'&mail='.$mail.'">Accueil</a></li>';
+						
+					    echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="#">Mon EbayECE</a></li>';
  
+					    echo '<li class="nav-item"><a class="nav-link" href="#">Panier</a></li>';
+					}
+					
+ 					?>
+					
 				</ul>
  
 			</div>
@@ -83,19 +102,19 @@ ECE Ebay
 				<div class="col-sm-1"><h2 class="titre">Filtre:</h2></div>
 				<div class="col-sm-1"></div>
 				<div class="col-sm-2">  
-					<button type="button" class="btn btn-light" href="avip.php">
-						<a class="btn btn-default" href="avip.php" role="button" style="color:black">Aucun</a>
+					<button type="button" class="btn btn-light" <?php echo 'href="avip.php?userid='.$userid.'&mail='.$mail.'"'?>>
+						<a class="btn btn-default" <?php echo 'href="avip.php?userid='.$userid.'&mail='.$mail.'"'?> role="button" style="color:black">Aucun</a>
 					</button> 
 			    </div>
 				<div class="col-sm-2">  
-					<button type="button" class="btn btn-light" href="avipEncher.php">
-						<a class="btn btn-default" href="avipEncher.php" role="button" style="color:black">Ench&egrave;re</a>
+					<button type="button" class="btn btn-light" <?php echo 'href="avipEncher.php?userid='.$userid.'&mail='.$mail.'"'?>>
+						<a class="btn btn-default" <?php echo 'href="avipEncher.php?userid='.$userid.'&mail='.$mail.'"'?> role="button" style="color:black">Ench&egrave;re</a>
 					</button> 
 			    </div>
 			
 				<div class="col-sm-2">
-				<button type="button" class="btn btn-light" href="avipBo.php">
-						<a class="btn btn-default" href="avipBo.php" role="button" style="color:black">Meilleure Offre</a>
+				<button type="button" class="btn btn-light" <?php echo 'href="avipBo.php?userid='.$userid.'&mail='.$mail.'"'?>>
+						<a class="btn btn-default" <?php echo 'href="avipBo.php?userid='.$userid.'&mail='.$mail.'"'?> role="button" style="color:black">Meilleure Offre</a>
 					</button> 
 			    </div>
 				
@@ -136,7 +155,7 @@ while ($donnees = $reponse->fetch())
 ?>
 						<div class="row">
 			
-							<div class="col-sm-3"><?php echo "<a href=\"items.php?id=".$donnees['ID']."&nom=".$donnees['Nom']."&prev=avipAi.php\"><img src=\"image/".$donnees['Media']."\"width=\"300\" height=\"300\"></a>"; ?></div>
+							<div class="col-sm-3"><?php echo "<a href=\"items.php?id=".$donnees['ID']."&nom=".$donnees['Nom']."&prev=avipAi.php&userid=".$userid."&mail=".$mail."\"><img src=\"image/".$donnees['Media']."\"width=\"300\" height=\"300\"></a>"; ?></div>
 							<div class="col-sm-3" style="background-color:#E3E3E3;"><h2> <?php echo $donnees['Nom']; ?></h2></div>
 							<div class="col-sm-3"><p> <?php echo $donnees['Description']; ?></p></div>
 							<div class="col-sm-3" style="background-color:#E3E3E3;">

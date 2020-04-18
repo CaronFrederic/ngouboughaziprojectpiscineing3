@@ -34,6 +34,9 @@ ECE Ebay
 		
 		$prev=isset($_GET["prev"]) ? $_GET["prev"]:"";
 		
+		$userid =isset($_GET["userid"]) ? $_GET["userid"]:"";
+		
+		$mail=isset($_GET["mail"]) ? $_GET["mail"]:"";
 			try
 			{
 				
@@ -66,17 +69,29 @@ ECE Ebay
  				
 				
 				<ul class="navbar-nav">
+					<?php
 					
-					<li id="inscrip" class="nav-item"><a class="nav-link" href="homepage.php">Accueil</a></li>
+					if($userid=="" && $mail=="")
+					{
+						echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="homepage.php">Accueil</a></li>';
 					
-					<li id="inscrip" class="nav-item"><a class="nav-link" <?php echo 'href="'.$prev.'"' ?>>Page Pr&eacute;dente</a></li>
+					echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="'.$prev.'?userid='.$userid.'&mail='.$mail.'" >Page Pr&eacute;dente</a></li>';
 					
-					<li id="inscrip" class="nav-item"><a class="nav-link" href="#">Insrivez Vous!</a></li>
+					echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="#">Insrivez Vous!</a></li>';
 					
-					<li class="nav-item"><a class="nav-link" <?php echo 'href="connection.php?prev='.$prev.'"'?>>Connectez Vous!</a></li>
+					echo '<li class="nav-item"><a class="nav-link"  href="connection.php?prev='.$prev.'">Connectez Vous!</a></li>';
  
-					<li class="nav-item"><a class="nav-link" href="#">Admin</a></li>
+					echo '<li class="nav-item"><a class="nav-link" href="#">Admin</a></li>';
+					}else
+					{
+						echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="homepageac.php?userid='.$userid.'&mail='.$mail.'">Accueil</a></li>';
+						
+					    echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="#">Mon EbayECE</a></li>';
  
+					    echo '<li class="nav-item"><a class="nav-link" href="#">Panier</a></li>';
+					}
+					
+ 					?>
 				</ul>
  
 			</div>
@@ -108,18 +123,18 @@ ECE Ebay
 				<div class="col-sm-3"></div>
 				<div class="col-sm-2"><h2 class="titre">Cat&eacute;gorie:</h2></div>
 				<div class="col-sm-2">  
-					<button type="button" class="btn btn-light" href="fot.php">
-						<a class="btn btn-default" href="fot.php" role="button" style="color:black">Feraille/Tr&eacute;sors</a>
+					<button type="button" class="btn btn-light" <?php echo 'href="fot.php?userid='.$id.'&mail='.$nom.'"' ?>>
+						<a class="btn btn-default" <?php echo 'href="fot.php?userid='.$id.'&mail='.$nom.'"' ?> role="button" style="color:black">Feraille/Tr&eacute;sors</a>
 					</button> 
 			    </div>
 				<div class="col-sm-2">  
-					<button type="button" class="btn btn-light" href="bpm.php">
-						<a class="btn btn-default" href="bpm.php" role="button" style="color:black">Bon pour Mus&eacute;e</a>
+					<button type="button" class="btn btn-light" <?php echo 'href="bpm.php?userid='.$id.'&mail='.$nom.'"' ?>>
+						<a class="btn btn-default" <?php echo 'href="bpm.php?userid='.$id.'&mail='.$nom.'"' ?> role="button" style="color:black">Bon pour Mus&eacute;e</a>
 					</button> 
 			    </div>
 				<div class="col-sm-2">  
-					<button type="button" class="btn btn-light" href="avip.php">
-						<a class="btn btn-default" href="avip.php" role="button" style="color:black">Acessoire VIP</a>
+					<button type="button" class="btn btn-light" <?php echo 'href="avip.php?userid='.$id.'&mail='.$nom.'"' ?>>
+						<a class="btn btn-default" <?php echo 'href="avip.php?userid='.$id.'&mail='.$nom.'"' ?> role="button" style="color:black">Acessoire VIP</a>
 					</button> 
 			    </div>
 				
@@ -150,7 +165,7 @@ ECE Ebay
 							
 							<h1> <?php 
 								
-						echo $prev;
+						
 						if($donnees['Prix']!=0)
 						{
 							echo "Prix: ".$donnees['Prix']."&euro;";
@@ -173,11 +188,16 @@ ECE Ebay
 			<div class="col-sm-2" >
 				<?php
 				
-					if($donnees['BestOffre']==1)
+					if($donnees['BestOffre']==1 && $userid=="" && $mail=="")
 					{
 						echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
 					    echo '<a class="btn btn-default" href="connection.php?prev=items.php" role="button" style="color:black">Faire une offre!</a>';	
 					   	echo '</button> ';
+					}else if($donnees['BestOffre']==1 && $userid!="" && $mail!=""){
+						
+						echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
+					 echo '<a class="btn btn-default" href="homepageac.php?userid='.$userid.'&mail='.$mail.'" role="button" style="color:black">Faire une offre!</a>';	
+					 echo '</button> ';	
 					}
 					
 					?>
@@ -186,11 +206,16 @@ ECE Ebay
 			<div class="col-sm-2" >
 				<?php
 				
-					if($donnees['Enchere']==1)
+					if($donnees['Enchere']==1 && $userid=="" && $mail=="")
 					{
 						echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
 					    echo '<a class="btn btn-default" href="connection.php?prev=items.php" role="button" style="color:black">Participer aux Enchère!</a>';	
 					    echo '</button> ';	
+					}else if($donnees['Enchere']==1 && $userid!="" && $mail!=""){
+						
+						echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
+					 echo '<a class="btn btn-default" href="homepageac.php?userid='.$userid.'&mail='.$mail.'" role="button" style="color:black">Participer aux Enchère!</a>';	
+					 echo '</button> ';	
 					}
 				     
 				?>
@@ -199,10 +224,15 @@ ECE Ebay
 			<div class="col-sm-2"  >
 				<?php
 				
-					if($donnees['AchatImediat']==1)
+					if($donnees['AchatImediat']==1 && $userid=="" && $mail=="")
 					{
 					 echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
 					 echo '<a class="btn btn-default" href="connection.php?prev=items.php" role="button" style="color:black">Acheter Maintenant!</a>';	
+					 echo '</button> ';	
+					}else if($donnees['AchatImediat']==1 && $userid!="" && $mail!=""){
+						
+						echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
+					 echo '<a class="btn btn-default" href="homepageac.php?userid='.$userid.'&mail='.$mail.'" role="button" style="color:black">Acheter Maintenant!</a>';	
 					 echo '</button> ';	
 					}
 				     

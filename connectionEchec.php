@@ -156,7 +156,7 @@ ECE Ebay
 			
 			if($donnees['Mail']==$mail && $donnees['Password']==$pass && $mail!="" && $pass!="" )
 			{
-				echo '<meta http-equiv="refresh" content="0;URL=homepage.php">';
+				echo '<meta http-equiv="refresh" content="0;URL=homepageac.php?userid='.$donnees['ID'].'&mail='.$mail.'">';
 				
 			}else if( $mail!="" && $pass!="" ){
 				echo '<meta http-equiv="refresh" content="0;URL=connectionEchec.php?prev='.$prev.'">';
