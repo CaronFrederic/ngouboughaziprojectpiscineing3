@@ -20,7 +20,7 @@ ECE Ebay
 	
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 	
-<link rel="stylesheet" type="text/css" href="fot.css">
+<link rel="stylesheet" type="text/css" href="monEbay.css">
 	
 </head> 
 	
@@ -31,7 +31,13 @@ ECE Ebay
 		$userid =isset($_GET["userid"]) ? $_GET["userid"]:"";//if then else
     
         $mail =isset($_GET["mail"]) ? $_GET["mail"]:"";
+		
+		$prev =isset($_GET["prev"]) ? $_GET["prev"]:"";
+		
+		$sucess=isset($_GET["sucess"]) ? $_GET["sucess"]:"10";
+		
 		?>
+		
 		
 		<nav class="navbar navbar-expand-md">
  				<a class="navbar-brand" href="#"></a>
@@ -50,23 +56,12 @@ ECE Ebay
 				<ul class="navbar-nav">
 					
 					<?php
-					if($userid=="" && $mail=="")
-					{
-						echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="homepage.php">Accueil</a></li>';
-					
-					    echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="#">Insrivez Vous!</a></li>';
-					
-					    echo '<li class="nav-item"><a class="nav-link" href="connection.php?prev=fot.php">Connectez Vous!</a></li>';
- 
-					    echo '<li class="nav-item"><a class="nav-link" href="#">Admin</a></li>';
-					}else 
-					{
+				
 						echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="homepageac.php?userid='.$userid.'&mail='.$mail.'">Accueil</a></li>';
-						
-					    echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="monEbay.php?prev=fotEncher.php&userid='.$userid.'&mail='.$mail.'">Mon EbayECE</a></li>';
+					
+						echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="'.$prev.'?userid='.$userid.'&mail='.$mail.'" >Page Pr&eacute;dente</a></li>';
  
-					    echo '<li class="nav-item"><a class="nav-link" href="panier.php?prev=fot.php&userid='.$userid.'&mail='.$mail.'">>Panier</a></li>';
-					}
+					    
 					
  					?>
 				</ul>
@@ -86,7 +81,7 @@ ECE Ebay
 				
 			<div class="row">
 				
-				<div class="col-sm-4">  <h1 class="titre">Ferraille/Tr&eacute;sors</h1> </div>
+				<div class="col-sm-4">  <h1 class="titre">Mon paniers</h1> </div>
 				
 			</div>
 			
@@ -95,25 +90,31 @@ ECE Ebay
 			
 		</div>
 			
+			<?php
+	
+				if($sucess==1)
+				{
+					echo '<br/><br/>	<center><h3 style="color:green;">Achat r&eacute;ussi! </h3></center><br/><br/>';
+				}else if($sucess==2)
+				{
+					echo '<br/><br/>	<center><h3 style="color:red;"> Echec! </h3></center><br/><br/>';
+				}
+	
+			?>
+			
 		<div class="row">
 				
 				<div class="col-sm-3"></div>
-				<div class="col-sm-1"><h2 class="titre">Filtre:</h2></div>
+				<div class="col-sm-1"></div>
 			<div class="col-sm-1"></div>
 				<div class="col-sm-2">  
-					<button type="button" class="btn btn-light" <?php echo 'href="fotEncher.php?userid='.$userid.'&mail='.$mail.'"'?>>
-						<a class="btn btn-default" <?php echo 'href="fotEncher.php?userid='.$userid.'&mail='.$mail.'"'?> role="button" style="color:black">Ench&egrave;re</a>
-					</button> 
+					 
 			    </div>
 				<div class="col-sm-2">  
-					<button type="button" class="btn btn-light" <?php echo 'href="fotAi.php?userid='.$userid.'&mail='.$mail.'"'?>>
-						<a class="btn btn-default" <?php echo 'href="fotAi.php?userid='.$userid.'&mail='.$mail.'"'?> role="button" style="color:black">Achat Im&eacute;diat</a>
-					</button>
+					
 			</div>
 			    <div class="col-sm-2">
-				<button type="button" class="btn btn-light" <?php echo 'href="fotBo.php?userid='.$userid.'&mail='.$mail.'"'?>>
-						<a class="btn btn-default" <?php echo 'href="fotBo.php?userid='.$userid.'&mail='.$mail.'"'?> role="button" style="color:black">Meilleure Offre</a>
-					</button> 
+				
 			    </div>
 				
 		</div>
@@ -128,9 +129,9 @@ ECE Ebay
 		<div class="container-fluid">
 		<div class="row">
 			
-			<div class="col-sm-3" style="background-color:red;"><h3>Images</h3></div>
-			<div class="col-sm-3" style="background-color:blue;"><h3>Nom</h3></div>
-			<div class="col-sm-3" style="background-color:#F5B041;"><h3>D&eacute;scription</h3></div>
+			<div class="col-sm-3" style="background-color:red;"><h3>Paniers</h3></div>
+			<div class="col-sm-3" style="background-color:blue; text-align: center;"></div>
+			<div class="col-sm-3" style="background-color:#F5B041;"></div>
 			<div class="col-sm-3" style="background-color:lightgreen;"></div>
 			</div>
 <?php
@@ -146,42 +147,70 @@ ECE Ebay
                 die('Erreur : ' .$e->getMessage);
             }
 
-		$reponse = $conn->query('SELECT * FROM Items WHERE Categorie=\'FOT\'');
-
+		$reponse = $conn->query('SELECT * FROM Panier WHERE Actif=\'0\' AND nb=\'0\' AND acheteur=\''.$mail.'\'');
+							
 while ($donnees = $reponse->fetch())
 {
-?>
+			$reponse->closeCursor();
+			$reponse = $conn->query('SELECT * FROM Items WHERE ID=\''.$donnees['ID'].'\'');
+			$donnees1=$reponse->fetch();	
+?>			
 						<div class="row">
 			
-							<div class="col-sm-3"><?php echo "<a href=\"items.php?id=".$donnees['ID']."&nom=".$donnees['Nom']."&prev=fot.php&userid=".$userid."&mail=".$mail."\"><img src=\"image/".$donnees['Media']."\"width=\"300\" height=\"300\"></a>"; ?></div>
-							<div class="col-sm-3" style="background-color:#E3E3E3;"><h2> <?php echo $donnees['Nom']; ?></h2></div>
-							<div class="col-sm-3"><p> <?php echo $donnees['Description']; ?></p></div>
+							<div class="col-sm-3"><?php echo "<img src=\"image/".$donnees1['Media']."\"width=\"300\" height=\"300\">"; ?></div>
+							<div class="col-sm-3" style="background-color:#E3E3E3;"><h2> <?php echo $donnees1['Nom']; ?></h2></div>
+							<div class="col-sm-3"><p> <?php echo $donnees1['Description']; ?></p></div>
 							<div class="col-sm-3" style="background-color:#E3E3E3;">
 							
 							<h1> <?php 
 						
-						if($donnees['Prix']!=0)
+						if($donnees1['Prix']!=0)
 						{
-							echo "Prix: ".$donnees['Prix']."&euro;";
-						}else if($donnees['PrixDepart'])
+							echo "Prix: ".$donnees1['Prix']."&euro;";
+						}else if($donnees1['PrixDepart'])
 						{
-							echo "Prix d&eacute;part: ".$donnees['PrixDepart']."&euro;";
+							echo "Prix d&eacute;part: ".$donnees1['PrixDepart']."&euro;";
 						}
+ 							$total=$donnees1['PrixDepart']+$donnees1['Prix'];
 							?></h1>
 							
 							</div>
 						</div>
 						
 						<?php
+	
 }
 
 $reponse->closeCursor(); // Termine le traitement de la requête
 
 ?>
+			<div class="row">
+			
+			<div class="col-sm-3" style="background-color:red;"></div>
+			<div class="col-sm-3" style="background-color:blue; "></div>
+			<div class="col-sm-3" style="background-color:#F5B041; text-align: right;"><h3>total:</h3></div>
+				<div class="col-sm-3" style="background-color:lightgreen;"><h3><?php echo $total."&euro;" ?></h3></div>
 			</div>
+			
+		</div>
 		
 		
+		<br>
+		<center>
+			<?php
+					
+				if($sucess!=1)
+				{
+					echo '<button type="button" class="btn btn-light" href="achat.php?prev='.$prev.'&userid='.$id.'&mail='.$nom.'">';
+					echo '<a class="btn btn-default" href="achat.php?prev='.$prev.'&userid='.$userid.'&mail='.$mail.'&total='.$total.'" role="button" style="color:black"> Payer maintenant</a>';
+					echo '</button> ';
+				}
+				
+			?>
 		
+						
+					
+		</center>
 		<br/><br/>
 		
 		

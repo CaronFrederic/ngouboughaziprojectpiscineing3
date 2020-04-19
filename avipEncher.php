@@ -63,9 +63,11 @@ ECE Ebay
 					{
 						echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="homepageac.php?userid='.$userid.'&mail='.$mail.'">Accueil</a></li>';
 						
-					    echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="#">Mon EbayECE</a></li>';
+						
+						
+					    echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="monEbay.php?prev=avipEncher.php&userid='.$userid.'&mail='.$mail.'">Mon EbayECE</a></li>';
  
-					    echo '<li class="nav-item"><a class="nav-link" href="#">Panier</a></li>';
+					    echo '<li class="nav-item"><a class="nav-link" href="panier.php?prev=avipEncher.php&userid='.$userid.'&mail='.$mail.'">Panier</a></li>';
 					}
 					
  					?>

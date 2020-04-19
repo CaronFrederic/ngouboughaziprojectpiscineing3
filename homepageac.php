@@ -49,9 +49,9 @@ ECE Ebay
 				
 				<ul class="navbar-nav">
 					
-					<li id="inscrip" class="nav-item"><a class="nav-link" href="#">Mon EbayECE</a></li>
+					<li id="inscrip" class="nav-item"><a class="nav-link" <?php echo 'href="monEbay.php?prev=homepageac.php&userid='.$userid.'&mail='.$mail.'"'; ?>>Mon EbayECE</a></li>
  
-					<li class="nav-item"><a class="nav-link" href="#">Panier</a></li>
+					<li class="nav-item"><a class="nav-link" <?php echo 'href="panier.php?prev=homepageac.php&userid='.$userid.'&mail='.$mail.'"'; ?>>Panier</a></li>
  
 				</ul>
  

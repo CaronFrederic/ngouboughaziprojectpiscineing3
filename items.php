@@ -20,6 +20,9 @@ ECE Ebay
 	
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 	
+	
+	
+	
 <link rel="stylesheet" type="text/css" href="items.css">
 	
 </head> 
@@ -37,6 +40,10 @@ ECE Ebay
 		$userid =isset($_GET["userid"]) ? $_GET["userid"]:"";
 		
 		$mail=isset($_GET["mail"]) ? $_GET["mail"]:"";
+		
+		$sucess=isset($_GET["sucess"]) ? $_GET["sucess"]:"10";
+		
+		
 			try
 			{
 				
@@ -84,11 +91,14 @@ ECE Ebay
 					echo '<li class="nav-item"><a class="nav-link" href="#">Admin</a></li>';
 					}else
 					{
+						
+						echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="'.$prev.'?userid='.$userid.'&mail='.$mail.'" >Page Pr&eacute;dente</a></li>';
+						
 						echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="homepageac.php?userid='.$userid.'&mail='.$mail.'">Accueil</a></li>';
 						
-					    echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="#">Mon EbayECE</a></li>';
+					    echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="monEbay.php?userid='.$userid.'&mail='.$mail.'">Mon EbayECE</a></li>';
  
-					    echo '<li class="nav-item"><a class="nav-link" href="#">Panier</a></li>';
+					    echo '<li class="nav-item"><a class="nav-link" href="panier.php?prev=items.php&userid='.$userid.'&mail='.$mail.'">Panier</a></li>';
 					}
 					
  					?>
@@ -118,23 +128,35 @@ ECE Ebay
 			
 		</div>
 			
+			<?php
+	
+				if($sucess==1)
+				{
+					echo '<br/><br/>	<center><h3 style="color:green;">Ajouté au panier! </h3></center><br/><br/>';
+				}else if($sucess==2)
+				{
+					echo '<br/><br/>	<center><h3 style="color:green;"> Offre Transmise! </h3></center><br/><br/>';
+				}
+	
+			?>
+			
 		<div class="row">
 				
 				<div class="col-sm-3"></div>
 				<div class="col-sm-2"><h2 class="titre">Cat&eacute;gorie:</h2></div>
 				<div class="col-sm-2">  
-					<button type="button" class="btn btn-light" <?php echo 'href="fot.php?userid='.$id.'&mail='.$nom.'"' ?>>
-						<a class="btn btn-default" <?php echo 'href="fot.php?userid='.$id.'&mail='.$nom.'"' ?> role="button" style="color:black">Feraille/Tr&eacute;sors</a>
+					<button type="button" class="btn btn-light" <?php echo 'href="fot.php?userid='.$useridid.'&mail='.$mail.'"' ?>>
+						<a class="btn btn-default" <?php echo 'href="fot.php?userid='.$userid.'&mail='.$mail.'"' ?> role="button" style="color:black">Feraille/Tr&eacute;sors</a>
 					</button> 
 			    </div>
 				<div class="col-sm-2">  
-					<button type="button" class="btn btn-light" <?php echo 'href="bpm.php?userid='.$id.'&mail='.$nom.'"' ?>>
-						<a class="btn btn-default" <?php echo 'href="bpm.php?userid='.$id.'&mail='.$nom.'"' ?> role="button" style="color:black">Bon pour Mus&eacute;e</a>
+					<button type="button" class="btn btn-light" <?php echo 'href="bpm.php?userid='.$useridid.'&mail='.$mail.'"' ?>>
+						<a class="btn btn-default" <?php echo 'href="bpm.php?userid='.$userid.'&mail='.$mail.'"' ?> role="button" style="color:black">Bon pour Mus&eacute;e</a>
 					</button> 
 			    </div>
 				<div class="col-sm-2">  
-					<button type="button" class="btn btn-light" <?php echo 'href="avip.php?userid='.$id.'&mail='.$nom.'"' ?>>
-						<a class="btn btn-default" <?php echo 'href="avip.php?userid='.$id.'&mail='.$nom.'"' ?> role="button" style="color:black">Acessoire VIP</a>
+					<button type="button" class="btn btn-light" <?php echo 'href="avip.php?userid='.$useridid.'&mail='.$mail.'"' ?>>
+						<a class="btn btn-default" <?php echo 'href="avip.php?userid='.$userid.'&mail='.$mail.'"' ?> role="button" style="color:black">Acessoire VIP</a>
 					</button> 
 			    </div>
 				
@@ -188,15 +210,37 @@ ECE Ebay
 			<div class="col-sm-2" >
 				<?php
 				
-					if($donnees['BestOffre']==1 && $userid=="" && $mail=="")
+				
+				
+				
+					if($donnees['BestOffre']==1 && $userid=="" && $mail=="" && $sucess!=1 && $sucess!=2)
 					{
+						?>
+					
+				<form method="post" action="traitement.php?id='.$id.'&nom='.$nom.'&prev='.$prev.'&userid='.$userid.'&mail='.$mail.'&paiement=2"> <input type="number" name="offre"> <br/><br/>
+				<textarea name="message"></textarea><br><br>
+				</form>
+				
+				
+					
+				<?php
+						
 						echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
 					    echo '<a class="btn btn-default" href="connection.php?prev=items.php" role="button" style="color:black">Faire une offre!</a>';	
 					   	echo '</button> ';
-					}else if($donnees['BestOffre']==1 && $userid!="" && $mail!=""){
+					}else if($donnees['BestOffre']==1 && $userid!="" && $mail!="" && $sucess!=1 && $sucess!=2){
+						?>
+					
+				<form method="post" action="traitement.php?id='.$id.'&nom='.$nom.'&prev='.$prev.'&userid='.$userid.'&mail='.$mail.'&paiement=2"> <input type="number" name="offre"> <br/><br/>
+				<textarea name="message"></textarea><br><br>
+				</form>
+				
+					
+				<?php
+						
 						
 						echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
-					 echo '<a class="btn btn-default" href="homepageac.php?userid='.$userid.'&mail='.$mail.'" role="button" style="color:black">Faire une offre!</a>';	
+					 echo '<a class="btn btn-default" href="traitement.php?id='.$id.'&nom='.$nom.'&prev='.$prev.'&userid='.$userid.'&mail='.$mail.'&paiement=2"  role="button" style="color:black">Faire une offre!</a>';	
 					 echo '</button> ';	
 					}
 					
@@ -205,16 +249,30 @@ ECE Ebay
 				<div class="col-sm-1" ></div>
 			<div class="col-sm-2" >
 				<?php
+						
 				
-					if($donnees['Enchere']==1 && $userid=="" && $mail=="")
+					
+				
+					if($donnees['Enchere']==1 && $userid=="" && $mail=="" && $sucess!=1 && $sucess!=2)
 					{
+						?>
+					
+				<form method="post" action="traitement.php?id='.$id.'&nom='.$nom.'&prev='.$prev.'&userid='.$userid.'&mail='.$mail.'&paiement=2"> <input type="number" name="offre">  </form>
+				
+					
+				<?php
 						echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
 					    echo '<a class="btn btn-default" href="connection.php?prev=items.php" role="button" style="color:black">Participer aux Enchère!</a>';	
 					    echo '</button> ';	
-					}else if($donnees['Enchere']==1 && $userid!="" && $mail!=""){
-						
+					}else if($donnees['Enchere']==1 && $userid!="" && $mail!="" && $sucess!=1 && $sucess!=2){
+						?>
+					
+				<form method="post" action="traitement.php?id='.$id.'&nom='.$nom.'&prev='.$prev.'&userid='.$userid.'&mail='.$mail.'&paiement=2"> <input type="number" name="offre">  </form>
+				
+					
+				<?php
 						echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
-					 echo '<a class="btn btn-default" href="homepageac.php?userid='.$userid.'&mail='.$mail.'" role="button" style="color:black">Participer aux Enchère!</a>';	
+		 echo '<a class="btn btn-default" href="traitement.php?id='.$id.'&nom='.$nom.'&prev='.$prev.'&userid='.$userid.'&mail='.$mail.'&paiement=2"  role="button" style="color:black">Participer aux Enchère!</a>';	
 					 echo '</button> ';	
 					}
 				     
@@ -224,15 +282,15 @@ ECE Ebay
 			<div class="col-sm-2"  >
 				<?php
 				
-					if($donnees['AchatImediat']==1 && $userid=="" && $mail=="")
+					if($donnees['AchatImediat']==1 && $userid=="" && $mail=="" && $sucess!=1 && $sucess!=2)
 					{
 					 echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
 					 echo '<a class="btn btn-default" href="connection.php?prev=items.php" role="button" style="color:black">Acheter Maintenant!</a>';	
 					 echo '</button> ';	
-					}else if($donnees['AchatImediat']==1 && $userid!="" && $mail!=""){
-						
+					}else if($donnees['AchatImediat']==1 && $userid!="" && $mail!="" && $sucess!=1 && $sucess!=2){
+					
 						echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
-					 echo '<a class="btn btn-default" href="homepageac.php?userid='.$userid.'&mail='.$mail.'" role="button" style="color:black">Acheter Maintenant!</a>';	
+					 echo '<a class="btn btn-default" href="traitement.php?id='.$id.'&nom='.$nom.'&prev='.$prev.'&userid='.$userid.'&mail='.$mail.'&paiement=1" role="button" style="color:black">Acheter Maintenant!</a>';	
 					 echo '</button> ';	
 					}
 				     
