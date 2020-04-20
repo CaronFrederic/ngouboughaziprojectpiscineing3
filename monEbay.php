@@ -59,6 +59,8 @@ ECE Ebay
  
 					    echo '<li class="nav-item"><a class="nav-link" href="panier.php?prev=monEbay.php&userid='.$userid.'&mail='.$mail.'">Panier</a></li>';
 					
+						echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="homepage.php">D&eacute;conexion</a></li>';
+					
  					?>
 				</ul>
  
@@ -279,7 +281,7 @@ while ($donnees = $reponse->fetch())
 			
 							<div class="col-sm-3"></div>
 							<div class="col-sm-3" style="background-color:#E3E3E3; text-align:center;"><h2> Mail:</h2></div>
-							<div class="col-sm-3"><p> <?php echo "<h1>".$donnees['Mail']."</h1>"; ?></p></div>
+							<div class="col-sm-3"><p> <?php echo "<h4>".$donnees['Mail']."</h4>"; ?></p></div>
 							<div class="col-sm-3" style="background-color:#E3E3E3;">
 							
 							</div>
@@ -405,7 +407,7 @@ while ($donnees = $reponse->fetch())
 			
 							<div class="col-sm-3"></div>
 							<div class="col-sm-3" style="background-color:#E3E3E3; text-align:center;"><h2> Nom Titulaire:</h2></div>
-							<div class="col-sm-3"><p> <?php echo "<h1>".$donnees['NomTitu']."</h1>"; ?></p></div>
+							<div class="col-sm-3"><p> <?php echo "<h4>".$donnees['NomTitu']."</h4>"; ?></p></div>
 							<div class="col-sm-3" style="background-color:#E3E3E3;">
 							
 							</div>

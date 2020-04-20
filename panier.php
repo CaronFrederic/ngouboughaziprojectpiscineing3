@@ -61,8 +61,9 @@ ECE Ebay
 					
 						echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="'.$prev.'?userid='.$userid.'&mail='.$mail.'" >Page Pr&eacute;dente</a></li>';
  
-					    
+						echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="homepage.php">D&eacute;conexion</a></li>';
 					
+						
  					?>
 				</ul>
  

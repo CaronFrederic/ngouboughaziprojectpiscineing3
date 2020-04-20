@@ -58,7 +58,7 @@ ECE Ebay
 					
 					    echo '<li class="nav-item"><a class="nav-link" href="connection.php?prev=bpm.php">Connectez Vous!</a></li>';
  
-					    echo '<li class="nav-item"><a class="nav-link" href="#">Admin</a></li>';
+					    echo '<li class="nav-item"><a class="nav-link" href="connectionA.php?prev=bpm.php">Admin</a></li>';
 					}else 
 					{
 						echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="homepageac.php?userid='.$userid.'&mail='.$mail.'">Accueil</a></li>';
@@ -68,6 +68,8 @@ ECE Ebay
 					    echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="monEbay.php?prev=bpm.php&userid='.$userid.'&mail='.$mail.'">Mon EbayECE</a></li>';
  
 					    echo '<li class="nav-item"><a class="nav-link" href="panier.php?prev=bpm.php&userid='.$userid.'&mail='.$mail.'">Panier</a></li>';
+						
+						echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="homepage.php">D&eacute;conexion</a></li>';
 					}
 					
  					?>

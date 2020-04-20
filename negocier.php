@@ -23,7 +23,7 @@ ECE Ebay
 	
 	
 	
-<link rel="stylesheet" type="text/css" href="items.css">
+<link rel="stylesheet" type="text/css" href="negocier.css">
 	
 </head> 
 	
@@ -41,9 +41,9 @@ ECE Ebay
 		
 		$mail=isset($_GET["mail"]) ? $_GET["mail"]:"";
 		
+		$user=isset($_GET["user"]) ? $_GET["user"]:"1";
+		
 		$sucess=isset($_GET["sucess"]) ? $_GET["sucess"]:"10";
-		
-		
 			try
 			{
 				
@@ -55,9 +55,18 @@ ECE Ebay
             catch(Exception $e){
                 die('Erreur : ' .$e->getMessage);
             }
+		
+		$reponse = $conn->query('SELECT * FROM Panier WHERE ID=\''.$id.'\' AND Nom=\''.$nom.'\'');
+		$donnees = $reponse->fetch();
+		
+		if ($donnees['ID']==null)
+		{
+			$dontexist=1;
+		}
 
 		$reponse = $conn->query('SELECT * FROM Items WHERE ID=\''.$id.'\' AND Nom=\''.$nom.'\'');
-		$donnees=$reponse->fetch();
+		$donnees = $reponse->fetch();
+		
 
 ?>
 
@@ -77,38 +86,27 @@ ECE Ebay
 				
 				<ul class="navbar-nav">
 					<?php
-					
-					if($userid=="" && $mail=="")
-					{
-						echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="homepage.php">Accueil</a></li>';
-					
-					echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="'.$prev.'?userid='.$userid.'&mail='.$mail.'" >Page Pr&eacute;dente</a></li>';
-					
-					echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="#">Insrivez Vous!</a></li>';
-					
-					echo '<li class="nav-item"><a class="nav-link"  href="connection.php?prev='.$prev.'">Connectez Vous!</a></li>';
- 
-					echo '<li class="nav-item"><a class="nav-link" href="#">Admin</a></li>';
-					}else
+					if($user=='1')
 					{
 						
-						echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="'.$prev.'?userid='.$userid.'&mail='.$mail.'" >Page Pr&eacute;dente</a></li>';
+						echo '<li class="nav-item"><a class="nav-link" href="'.$prev.'?prev='.$prev.'&userid='.$userid.'&mail='.$mail.'">Pr&eacute;cedent</a></li>';
+						echo '<li class="nav-item"><a class="nav-link" href="panier.php?prev='.$prev.'&userid='.$userid.'&mail='.$mail.'">Panier</a></li>';
 						
-						echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="homepageac.php?userid='.$userid.'&mail='.$mail.'">Accueil</a></li>';
-						
-					    echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="monEbay.php?userid='.$userid.'&mail='.$mail.'">Mon EbayECE</a></li>';
- 
-					    echo '<li class="nav-item"><a class="nav-link" href="panier.php?prev=items.php&userid='.$userid.'&mail='.$mail.'">Panier</a></li>';
-						
-						echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="homepage.php">D&eacute;conexion</a></li>';
 					}
 					
- 					?>
+						
+						echo '<li id="inscrip" class="nav-item"><a class="nav-link" href="homepage.php">D&eacute;conexion</a></li>';
+					?>
+					
+					
 				</ul>
  
 			</div>
 
 		</nav>
+		
+		
+		
 		<br/><br/>
 		<div class="container-fluid">
 		
@@ -132,37 +130,17 @@ ECE Ebay
 			
 			<?php
 	
-				if($sucess==1)
-				{
-					echo '<br/><br/>	<center><h3 style="color:green;">Ajouté au panier! </h3></center><br/><br/>';
-				}else if($sucess==2)
+				 if($sucess==2)
 				{
 					echo '<br/><br/>	<center><h3 style="color:green;"> Offre Transmise! </h3></center><br/><br/>';
 				}
-	
+					
+				if($dontexist==1)
+				{
+					echo '<br/><br/>	<center><h3 style="color:red;"> Aucune offre en cours </h3></center><br/><br/>';
+				}
+				
 			?>
-			
-		<div class="row">
-				
-				<div class="col-sm-3"></div>
-				<div class="col-sm-2"><h2 class="titre">Cat&eacute;gorie:</h2></div>
-				<div class="col-sm-2">  
-					<button type="button" class="btn btn-light" <?php echo 'href="fot.php?userid='.$useridid.'&mail='.$mail.'"' ?>>
-						<a class="btn btn-default" <?php echo 'href="fot.php?userid='.$userid.'&mail='.$mail.'"' ?> role="button" style="color:black">Feraille/Tr&eacute;sors</a>
-					</button> 
-			    </div>
-				<div class="col-sm-2">  
-					<button type="button" class="btn btn-light" <?php echo 'href="bpm.php?userid='.$useridid.'&mail='.$mail.'"' ?>>
-						<a class="btn btn-default" <?php echo 'href="bpm.php?userid='.$userid.'&mail='.$mail.'"' ?> role="button" style="color:black">Bon pour Mus&eacute;e</a>
-					</button> 
-			    </div>
-				<div class="col-sm-2">  
-					<button type="button" class="btn btn-light" <?php echo 'href="avip.php?userid='.$useridid.'&mail='.$mail.'"' ?>>
-						<a class="btn btn-default" <?php echo 'href="avip.php?userid='.$userid.'&mail='.$mail.'"' ?> role="button" style="color:black">Acessoire VIP</a>
-					</button> 
-			    </div>
-				
-		</div>
 			
 		
 		
@@ -202,27 +180,62 @@ ECE Ebay
 							</div>
 						</div>
 						
-						
+			
+			<div class="row">
+			
+			<div class="col-sm-3" style="background-color:red;" ><h3>R&eacute;sum&eacute;:</h3></div>
+			<div class="col-sm-3" style="background-color:blue;"></div>
+			<div class="col-sm-3" style="background-color:#F5B041;"></div>
+			<div class="col-sm-3" style="background-color:lightgreen;"></div>
+			
+			</div>
 			
 			
+			<?php
+		
+		$reponse->closeCursor();
+			try
+			{
+				
+				//On établit la connexion
+            $conn = new PDO('mysql:host=localhost;dbname=EbayECE;charset=utf8', 'root', 'root');
+            
+            //On vérifie la connexion
+			}
+            catch(Exception $e){
+                die('Erreur : ' .$e->getMessage);
+            }
+
+		$reponse = $conn->query('SELECT * FROM Panier WHERE ID=\''.$id.'\' AND Nom=\''.$nom.'\'');
+		$donnees = $reponse->fetch();
+
+?>
+			<div class="row">
+			
+			<div class="col-sm-3" ></div>
+			<div class="col-sm-3" style="background-color:#E3E3E3;"><h1><?php echo 'Offre: '.$donnees['Offre']."&euro;"; ?></h1></div>
+			<div class="col-sm-3" >Dernier message: <br/> <?php echo $donnees['Message']; ?></div>
+			<div class="col-sm-3" style="background-color:#E3E3E3;"></div>
+			
+			</div>
 			
 			<br/><br/><br/>
 			<div class="row">
-			<div class="col-sm-2" ></div>
+			<div class="col-sm-5" ></div>
 			<div class="col-sm-2" >
 				<?php
 				
 				
 				
 				
-					if($donnees['BestOffre']==1 && $userid=="" && $mail=="" && $sucess!=1 && $sucess!=2)
+					if( $userid=="" && $mail=="" && $sucess!=1 && $sucess!=2)
 					{
 						?>
-					
-				<form method="post" action="traitement.php?id='.$id.'&nom='.$nom.'&prev='.$prev.'&userid='.$userid.'&mail='.$mail.'&paiement=2"> <input type="number" name="offre"> <br/><br/>
+					<center>
+				<form method="post" action="traitement1.php"> <input type="number" name="offre"> <br/><br/>
 				<textarea name="message"></textarea><br><br>
 				</form>
-				
+				</center>
 				
 					
 				<?php
@@ -230,74 +243,32 @@ ECE Ebay
 						echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
 					    echo '<a class="btn btn-default" href="connection.php?prev=items.php" role="button" style="color:black">Faire une offre!</a>';	
 					   	echo '</button> ';
-					}else if($donnees['BestOffre']==1 && $userid!="" && $mail!="" && $sucess!=1 && $sucess!=2){
+					}else if($userid!="" && $mail!="" && $sucess!=1 && $sucess!=2){
 						?>
-					
-				<form method="post" action="traitement.php?id='.$id.'&nom='.$nom.'&prev='.$prev.'&userid='.$userid.'&mail='.$mail.'&paiement=2"> <input type="number" name="offre"> <br/><br/>
+					<center>
+				<form method="post" action="traitement1.php"> <input type="number" name="offre"> <br/><br/>
 				<textarea name="message"></textarea><br><br>
 				</form>
-				
+				</center>
 					
 				<?php
 						
 						
 						echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
-					 echo '<a class="btn btn-default" href="traitement.php?id='.$id.'&nom='.$nom.'&prev='.$prev.'&userid='.$userid.'&mail='.$mail.'&paiement=2"  role="button" style="color:black">Faire une offre!</a>';	
+					 echo '<a class="btn btn-default" href="traitement1.php?id='.$id.'&nom='.$nom.'&prev='.$prev.'&userid='.$userid.'&mail='.$mail.'&paiement=2$user='.$user.'"  role="button" style="color:black">Faire une offre!</a>';	
 					 echo '</button> ';	
+						echo '<br/><br/>';
+						echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
+					 echo '<a class="btn btn-default" href="traitement1.php?id='.$id.'&nom='.$nom.'&prev='.$prev.'&userid='.$userid.'&mail='.$mail.'&paiement=3$user='.$user.'"  role="button" style="color:black">Accepter La proposition</a>';	
+					 echo '</button> ';	
+						
 					}
 					
 					?>
 				</div>
 				<div class="col-sm-1" ></div>
-			<div class="col-sm-2" >
-				<?php
-						
-				
-					
-				
-					if($donnees['Enchere']==1 && $userid=="" && $mail=="" && $sucess!=1 && $sucess!=2)
-					{
-						?>
-					
-				<form method="post" action="traitement.php?id='.$id.'&nom='.$nom.'&prev='.$prev.'&userid='.$userid.'&mail='.$mail.'&paiement=2"> <input type="number" name="offre">  </form>
-				
-					
-				<?php
-						echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
-					    echo '<a class="btn btn-default" href="connection.php?prev=items.php" role="button" style="color:black">Participer aux Enchère!</a>';	
-					    echo '</button> ';	
-					}else if($donnees['Enchere']==1 && $userid!="" && $mail!="" && $sucess!=1 && $sucess!=2){
-						?>
-					
-				<form method="post" action="traitement.php?id='.$id.'&nom='.$nom.'&prev='.$prev.'&userid='.$userid.'&mail='.$mail.'&paiement=2"> <input type="number" name="offre">  </form>
-				
-					
-				<?php
-						echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
-		 echo '<a class="btn btn-default" href="traitement.php?id='.$id.'&nom='.$nom.'&prev='.$prev.'&userid='.$userid.'&mail='.$mail.'&paiement=2"  role="button" style="color:black">Participer aux Enchère!</a>';	
-					 echo '</button> ';	
-					}
-				     
-				?>
-				</div>
+			
 				<div class="col-sm-1" ></div>
-			<div class="col-sm-2"  >
-				<?php
-				
-					if($donnees['AchatImediat']==1 && $userid=="" && $mail=="" && $sucess!=1 && $sucess!=2)
-					{
-					 echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
-					 echo '<a class="btn btn-default" href="connection.php?prev=items.php" role="button" style="color:black">Acheter Maintenant!</a>';	
-					 echo '</button> ';	
-					}else if($donnees['AchatImediat']==1 && $userid!="" && $mail!="" && $sucess!=1 && $sucess!=2){
-					
-						echo '<button type="button" class="btn btn-light" href="connection.php?prev='.$prev.'">';
-					 echo '<a class="btn btn-default" href="traitement.php?id='.$id.'&nom='.$nom.'&prev='.$prev.'&userid='.$userid.'&mail='.$mail.'&paiement=1" role="button" style="color:black">Acheter Maintenant!</a>';	
-					 echo '</button> ';	
-					}
-				     
-				?>
-				</div>
 			<div class="col-sm-2"></div>
 			</div>
 			
@@ -316,7 +287,7 @@ $reponse->closeCursor(); // Termine le traitement de la requête
 		<br/><br/>
 		
 		
-		
+	
 		
 		<footer class="page-footer"> 
 			<div class="container">

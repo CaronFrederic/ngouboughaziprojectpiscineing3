@@ -124,7 +124,7 @@ ECE Ebay
 			<div class="col-sm-9"></div>
 			<div class="col-sm-2">  
 					<button type="button" class="btn btn-light" href="#">
-						<a class="btn btn-default" href="#" role="button" style="color:black"><small>Vous &ecirc;tes vendeurs? Cliquez ici!</small></a>
+						<a class="btn btn-default" <?php echo 'href="connectionV.php?prev='.$prev.'"' ?> role="button" style="color:black"><small>Vous &ecirc;tes vendeurs? Cliquez ici!</small></a>
 					</button> 
 			    </div>
 			<div class="col-sm-1"></div>

@@ -80,7 +80,7 @@ ECE Ebay
 			<div class="col-sm-5"></div>
 		
 		</div>
-				<br/><br/>	<center><h3 style="color:red;">E-mail ou mot de passe incorrect </h3></center><br/><br/>
+				<br/><br/>	<br/><br/>
 		<div class="row">
 			
 		<div class="col-sm-4"></div>
@@ -96,7 +96,7 @@ ECE Ebay
 			<div class="row">
 			
 		<div class="col-sm-3"></div>
-		<div class="col-sm-2" > <h2 style="background-color:#C0C0C0; text-align: center;">Password:</h2></div>
+		<div class="col-sm-2" > <h2 style="background-color:#C0C0C0; text-align: center;">Pseudo:</h2></div>
 		<div class="col-sm-1"></div>
 		<div class="col-sm-2" ><input type="password" name="pass"class="form-control" placeholder="password"></div>
 		<div class="col-sm-3"></div>	
@@ -119,16 +119,7 @@ ECE Ebay
 			
 			<br/><br/>
 			
-			<div class="row">
-				
-			<div class="col-sm-9"></div>
-			<div class="col-sm-2">  
-					<button type="button" class="btn btn-light" href="#">
-						<a class="btn btn-default" <?php echo 'href="connectionV.php?prev='.$prev.'"' ?> role="button" style="color:black"><small>Vous &ecirc;tes vendeurs? Cliquez ici!</small></a>
-					</button> 
-			    </div>
-			<div class="col-sm-1"></div>
-			</div>
+			
 			
 		</div>
 		</form>
@@ -150,16 +141,16 @@ ECE Ebay
                 die('Erreur : ' .$e->getMessage);
             }
 														 
-			$reponse = $conn->query('SELECT * FROM Acheteurs WHERE Mail=\''.$mail.'\' AND Password=\''.$pass.'\'');
+			$reponse = $conn->query('SELECT * FROM Vendeurs WHERE mail=\''.$mail.'\' AND pseudo=\''.$pass.'\'');
 			$donnees=$reponse->fetch();
 														 
 			
-			if($donnees['Mail']==$mail && $donnees['Password']==$pass && $mail!="" && $pass!="" )
+			if($donnees['mail']==$mail && $donnees['pseudo']==$pass && $mail!="" && $pass!="" )
 			{
-				echo '<meta http-equiv="refresh" content="0;URL=homepageac.php?userid='.$donnees['ID'].'&mail='.$mail.'">';
+				echo '<meta http-equiv="refresh" content="0;URL=vendeur.php?userid='.$donnees['ID'].'&mail='.$mail.'">';
 				
 			}else if( $mail!="" && $pass!="" ){
-				echo '<meta http-equiv="refresh" content="0;URL=connectionEchec.php?prev='.$prev.'">';
+				echo '<meta http-equiv="refresh" content="0;URL=connectionEchecV.php?prev='.$prev.'">';
 				
 			}
 			

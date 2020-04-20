@@ -47,7 +47,7 @@ ECE Ebay
 					
 					<li class="nav-item"><a class="nav-link" href="connection.php?prev=homepage.php">Connectez Vous!</a></li>
  
-					<li class="nav-item"><a class="nav-link" href="#">Admin</a></li>
+					<li class="nav-item"><a class="nav-link" href="connectionA.php?prev=homepage.php">Admin</a></li>
  
 				</ul>
  
